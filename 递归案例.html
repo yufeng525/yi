@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var data = [{
+            id: 1,
+            name: '家电',
+            goods: [{
+                id: 11,
+                gname: '冰箱',
+                goods: [{
+                        id: 111,
+                        gname: '海尔'
+                    }, {
+                        id: 112,
+                        gname: '美的'
+                    },
+
+                ]
+
+            }, {
+                id: 12,
+                gname: '洗衣机'
+            }]
+        }, {
+            id: 2,
+            name: '服饰'
+        }];
+        // 我们想要做输入id号,就可以返回的数据对象
+        // 1. 利用 forEach 去遍历里面的每一个对象
+        function fn(array, id) {
+            var o = {};
+            array.forEach(function(value, index, array) {
+                // console.log(value);
+                if (value.id == id) {
+                    // console.log(value); // 可以打印我们数组外层两条数据
+                    o = value;
+                    return value;
+                } else if (value.goods && value.goods.length > 0) {
+                    o = fn(value.goods, id);
+                } // 或者你的这个对象里面的有goods，并且它里面有数据
+            })
+            return o;
+        }
+        console.log(fn(data, 1));
+        console.log(fn(data, 2));
+        console.log(fn(data, 11));
+        console.log(fn(data, 12));
+
+        // 1. 我们一参数的形式把我们的数组进行传递，通过foreach遍历我们的数组
+        // 2.这样我们就可以遍历到data数组里面的两条数据（goods是包含在第一个对象里）
+        // 3.但是我们要获取的第一个对象里面的的对象，我们可以通过递归自调用方式来获取
+        // 4.递归调用自身函数，把goods里面的数据进行遍历
+    </script>
+</body>
+
+</html>
